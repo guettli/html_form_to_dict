@@ -14,6 +14,11 @@ data['name']='Mrs. Y'
 response = user_client.post(url, data)
 ```    
 
+The dictionary returned by `html_form_to_dict()` does not allow adding new
+keys, which are not in the dictionary yet. This way you get an error if your
+test sets the value for an input which (due to refactoring) does not exist any more.
+
+
 # Development
 
 ```

@@ -1,7 +1,8 @@
+import pytest
 from html_form_to_dict import html_form_to_dict
 
 
-def test_get_form_data_empty():
+def test_html_form_to_dict__empty():
     html = '''
     <form>
     <input type="text" name="my-input">
@@ -10,7 +11,7 @@ def test_get_form_data_empty():
     assert html_form_to_dict(html) == {'my-input': '', 'my-textarea': ''}
 
 
-def test_get_form_data_with_value():
+def test_html_form_to_dict__with_value():
     html = '''
     <form>
      <input type="text" name="my-input" value="my-input-value">
@@ -22,7 +23,7 @@ def test_get_form_data_with_value():
                                    'my-checkbox': 'my-checkbox-value',
                                    }
 
-def test_get_form_data_checkboxes():
+def test_html_form_to_dict__checkboxes():
     html = '''
     <form>
      <input type="checkbox" name="my-checkbox" value="v1" checked>
@@ -32,3 +33,12 @@ def test_get_form_data_checkboxes():
                                    'my-checkbox': ['v1', 'v2'],
                                    }
 
+def test_html_form_to_dict__unknown_key():
+    html = '''
+    <form>
+     <input type="checkbox" name="name" value="value">
+    </form>'''
+    data = html_form_to_dict(html)
+    data['not-existing-key']
+    with pytest.raises(KeyError):
+        data['typo']

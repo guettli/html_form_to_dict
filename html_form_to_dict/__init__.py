@@ -23,6 +23,6 @@ class FormData(UserDict):
             value = [el.value for el in value.group]
         super().__setitem__(key, value)
 
-def html_form_to_dict(content):
-    tree = lxml.html.fromstring(content)
+def html_form_to_dict(html):
+    tree = lxml.html.fromstring(html)
     return FormData(tree.forms[0].fields)
