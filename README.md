@@ -20,11 +20,23 @@ The dictionary returned by `html_form_to_dict()` does not allow adding new
 keys, which are not in the dictionary yet. This way you get an error if your
 test sets the value for an input which (due to refactoring) does not exist any more.
 
+# Install
+
+```shell
+pip install html_form_to_dict
+```
 
 # Development
 
 ```
-# If you have your ssh key uploaded to github:
+# You need to upload your ssh-pub-key to github first
+
 pip install -e git+ssh://git@github.com/guettli/html_form_to_dict#egg=html_form_to_dict
+
+... edit
+
+pytest
+
+create Pull-Request
 ```
 
