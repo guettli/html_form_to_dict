@@ -39,6 +39,5 @@ def test_html_form_to_dict__unknown_key():
      <input type="checkbox" name="name" value="value">
     </form>'''
     data = html_form_to_dict(html)
-    data['not-existing-key']
     with pytest.raises(KeyError):
         data['typo']
