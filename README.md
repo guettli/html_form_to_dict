@@ -1,3 +1,5 @@
+![Python package](https://github.com/guettli/html_form_to_dict/workflows/Python%20package/badge.svg)
+
 # HTML Form to Dict
 
 This is a tiny library which provides a method called `html_form_to_dict()`.
