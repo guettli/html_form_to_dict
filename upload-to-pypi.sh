@@ -1,6 +1,6 @@
 #!/bin/bash
 set -exo pipefail
-#git commit .
+git commit .
 bumpver update
 git push
 rm -rf dist
