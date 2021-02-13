@@ -1,7 +1,7 @@
 #!/bin/bash
 set -exo pipefail
-bumpver update
 git commit .
+bumpver update
 git push
 rm -rf dist
 pip -q install -U twine
