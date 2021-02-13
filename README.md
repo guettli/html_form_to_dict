@@ -28,15 +28,12 @@ pip install html_form_to_dict
 
 # Development
 
-```
-# You need to upload your ssh-pub-key to github first
+You need to upload your ssh-pub-key to github first:
 
+```shell
 pip install -e git+ssh://git@github.com/guettli/html_form_to_dict#egg=html_form_to_dict
-
-... edit
-
+edit-the-code
 pytest
-
 create Pull-Request
 ```
 
