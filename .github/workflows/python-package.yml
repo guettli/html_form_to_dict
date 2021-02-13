@@ -37,19 +37,3 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-
-  bump-version:
-    steps:
-    - name: Bump Version
-      run: |
-        bumpver update
-    - name: Commit files
-      run: |
-        git config --local user.email "github-action@example.com"
-        git config --local user.name "github-actions[bot]"
-        git commit -m "Bump Version" -a
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
