@@ -53,3 +53,7 @@ pytest
 create Pull-Request
 ```
 
+# Alternatives
+
+* [Mechanize](https://mechanize.readthedocs.io/en/latest/) This library is like a browser without JS support.
+* You could use BeautifulSoup like explained in this [Stackoverflow Answer](https://stackoverflow.com/a/65571001/633961)
