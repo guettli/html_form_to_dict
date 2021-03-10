@@ -1,6 +1,12 @@
 #!/bin/bash
 set -exo pipefail
-git commit .
+
+if [ ! -z "$(git status --porcelain)" ]; then
+  echo "unclean"
+  git status
+  exit 1
+fi
+
 bumpver update
 git push
 rm -rf dist
