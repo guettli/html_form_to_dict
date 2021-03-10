@@ -16,7 +16,7 @@ def test_foo(user_client):
     assert data == {'city': 'Chemnitz', 'name': 'Mr. X'}
     data['name']='Mrs. Y'
     response = user_client.post(url, data)
-    assert resonse.status == 302, response['form'].errors
+    assert resonse.status == 302, response.context['form'].errors
 ```    
 
 ```Python
