@@ -23,7 +23,7 @@ def test_html_form_to_dict__with_value():
                                    'my-checkbox': 'my-checkbox-value',
                                    }
 
-def test_html_form_to_dict__checkboxes():
+def test_html_form_to_dict__checkboxes_checked():
     html = '''
     <form>
      <input type="checkbox" name="my-checkbox" value="v1" checked>
@@ -32,6 +32,14 @@ def test_html_form_to_dict__checkboxes():
     assert html_form_to_dict(html) == {
                                    'my-checkbox': ['v1', 'v2'],
                                    }
+
+def test_html_form_to_dict__checkboxes_unchecked():
+    html = '''
+    <form>
+     <input type="checkbox" name="my-checkbox" value="v1">
+     <input type="checkbox" name="my-checkbox" value="v2">
+    </form>'''
+    assert html_form_to_dict(html) == {}
 
 def test_html_form_to_dict__unknown_key():
     html = '''
