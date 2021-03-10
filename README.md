@@ -9,8 +9,7 @@ This method takes a string containing HTML and returns a dictionary of the value
 
 You can use it in tests like this:
 
-
-```Python
+```
 def test_foo(user_client):
     url = reverse('foo')
     response = user_client.get(url)
@@ -19,7 +18,7 @@ def test_foo(user_client):
     data['name']='Mrs. Y'
     response = user_client.post(url, data)
     assert resonse.status == 302, response.context['form'].errors
-```    
+```
 
 ```Python
 # conftest.py
