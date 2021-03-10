@@ -39,7 +39,7 @@ def test_html_form_to_dict__checkboxes_unchecked():
      <input type="checkbox" name="my-checkbox" value="v1">
      <input type="checkbox" name="my-checkbox" value="v2">
     </form>'''
-    assert html_form_to_dict(html) == {}
+    assert html_form_to_dict(html) == {'my-checkbox': []}
 
 def test_html_form_to_dict__unknown_key():
     html = '''

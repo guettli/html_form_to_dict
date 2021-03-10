@@ -21,8 +21,6 @@ class FormData(UserDict):
             value = value.lstrip('\n')
         if isinstance(value, CheckboxValues):
             value = [el.value for el in value.group if el.value is not None]
-            if value == []:
-                return
         super().__setitem__(key, value)
 
 def html_form_to_dict(html):
