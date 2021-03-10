@@ -20,6 +20,7 @@ def test_foo(user_client):
     assert resonse.status == 302, response.context['form'].errors
 ```
 
+
 ```Python
 # conftest.py
 
