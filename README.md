@@ -10,28 +10,17 @@ This method takes a string containing HTML and returns a dictionary of the value
 You can use it in tests like this:
 
 ```
-def test_foo(user_client):
+def test_foo(client):
     url = reverse('foo')
-    response = user_client.get(url)
+    response = client.get(url)
     data = html_form_to_dict(response.content) # <====================
     assert data == {'city': 'Chemnitz', 'name': 'Mr. X'}
     data['name']='Mrs. Y'
-    response = user_client.post(url, data)
+    response = client.post(url, data)
     assert resonse.status == 302, response.context['form'].errors
 ```
 
-```Python
-# conftest.py
-
-@pytest.fixture()
-def user_client(db, user):
-    """A Django test client logged in as an admin user."""
-    from django.test.client import Client
-    client = Client()
-    client.force_login(user)
-    client.user = user
-    return client
-```
+Above code uses pytest-django. See [client fixture](https://pytest-django.readthedocs.io/en/latest/helpers.html#client-django-test-client)
 
 The dictionary returned by `html_form_to_dict()` does not allow adding new
 keys, which are not in the dictionary yet. This way you get an error if your
