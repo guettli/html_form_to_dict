@@ -47,3 +47,4 @@ create Pull-Request
 
 * [Mechanize](https://mechanize.readthedocs.io/en/latest/) This library is like a browser without JS support.
 * You could use BeautifulSoup like explained in this [Stackoverflow Answer](https://stackoverflow.com/a/65571001/633961)
+* Use [Playwright](https://playwright.dev/) for browser based end-to-end tests.
