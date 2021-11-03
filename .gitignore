@@ -1,5 +1,5 @@
-build
+.env
 dist
-*.egg-info/
-__pycache__
-
+.idea
+*egg-info
+*.pyc
