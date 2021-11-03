@@ -49,3 +49,28 @@ def test_html_form_to_dict__unknown_key():
     data = html_form_to_dict(html)
     with pytest.raises(KeyError):
         data['typo']
+
+def test_html_form_to_dict__select_single():
+    html = '''
+    <form>
+     <select name="cars" id="cars">
+      <option value="volvo">Volvo</option>
+      <option value="saab" selected>Saab</option>
+      <option value="mercedes">Mercedes</option>
+     </select>
+    <form>
+     '''
+    assert html_form_to_dict(html) == {'cars': 'saab'}
+
+
+def test_html_form_to_dict__select_multiple():
+    html = '''
+    <form>
+     <select name="cars" id="cars" multiple>
+      <option value="volvo" selected>Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes" selected>Mercedes</option>
+     </select>
+    <form>
+     '''
+    assert html_form_to_dict(html) == {'cars': ['volvo', 'mercedes']}

@@ -1,7 +1,7 @@
 from collections import UserDict
 
 import lxml.html
-from lxml.html import CheckboxValues
+from lxml.html import CheckboxValues, MultipleSelectOptions
 
 
 class FormData(UserDict):
@@ -21,6 +21,8 @@ class FormData(UserDict):
             value = value.lstrip('\n')
         if isinstance(value, CheckboxValues):
             value = [el.value for el in value.group if el.value is not None]
+        if isinstance(value, MultipleSelectOptions):
+            value = list(value)
         super().__setitem__(key, value)
 
 def html_form_to_dict(html):
