@@ -1,3 +1,5 @@
+.coveragerc
+build/
 .env
 dist
 .idea
