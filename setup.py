@@ -1,3 +1,3 @@
 from setuptools import setup
 
-setup()
+setup(version=os.environ.get('BUILD_VERSION'))
