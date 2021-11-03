@@ -1,4 +1,4 @@
-.coveragerc
+.coverage
 build/
 .env
 dist

@@ -1,0 +1,14 @@
+[run]
+omit =
+ *_test.py
+ */migrations/*.py
+
+source =
+ html_form_to_dict
+
+[html]
+directory = coverage_html_report
+
+[report]
+
+fail_under = 97
