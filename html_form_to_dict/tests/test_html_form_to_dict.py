@@ -19,9 +19,10 @@ def test_html_form_to_dict__with_value():
      <input type="checkbox" name="my-checkbox" value="my-checkbox-value" checked>
     </form>'''
     assert html_form_to_dict(html) == {'my-input': 'my-input-value',
-                                   'my-textarea': 'my-textarea-value',
-                                   'my-checkbox': 'my-checkbox-value',
-                                   }
+                                       'my-textarea': 'my-textarea-value',
+                                       'my-checkbox': 'my-checkbox-value',
+                                       }
+
 
 def test_html_form_to_dict__checkboxes_checked():
     html = '''
@@ -30,8 +31,9 @@ def test_html_form_to_dict__checkboxes_checked():
      <input type="checkbox" name="my-checkbox" value="v2" checked>
     </form>'''
     assert html_form_to_dict(html) == {
-                                   'my-checkbox': ['v1', 'v2'],
-                                   }
+        'my-checkbox': ['v1', 'v2'],
+    }
+
 
 def test_html_form_to_dict__checkboxes_unchecked():
     html = '''
@@ -41,6 +43,7 @@ def test_html_form_to_dict__checkboxes_unchecked():
     </form>'''
     assert html_form_to_dict(html) == {'my-checkbox': []}
 
+
 def test_html_form_to_dict__unknown_key():
     html = '''
     <form>
@@ -49,6 +52,7 @@ def test_html_form_to_dict__unknown_key():
     data = html_form_to_dict(html)
     with pytest.raises(KeyError):
         data['typo']
+
 
 def test_html_form_to_dict__select_single():
     html = '''
@@ -74,3 +78,34 @@ def test_html_form_to_dict__select_multiple():
     <form>
      '''
     assert html_form_to_dict(html) == {'cars': ['volvo', 'mercedes']}
+
+
+def test_form_by_index_name_or_id():
+    html = '''
+    <form name="one" id="id1">
+     <input type="text" name="my_input" value="some value">
+    </form>
+    <form name="two" id="id2">
+     <input type="text" name="my_input" value="some other value">
+    </form>
+    '''
+
+    # by name
+    assert html_form_to_dict(html, name="one") == {'my_input': 'some value'}
+    assert html_form_to_dict(html, name="two") == {'my_input': 'some other value'}
+    with pytest.raises(ValueError) as excinfo:
+        html_form_to_dict(html, name='unknown')
+    assert str(excinfo.value) == '''No form with name="unknown" found. Found forms with these names: ['one', 'two']'''
+
+    # by id
+    assert html_form_to_dict(html, id="id1") == {'my_input': 'some value'}
+    assert html_form_to_dict(html, id="id2") == {'my_input': 'some other value'}
+    with pytest.raises(ValueError) as excinfo:
+        html_form_to_dict(html, id='unknown')
+    assert str(excinfo.value) == '''No form with id="unknown" found. Found forms with these ids: ['id1', 'id2']'''
+
+    # by index
+    assert html_form_to_dict(html, 1) == {'my_input': 'some other value'}
+    with pytest.raises(IndexError):
+        html_form_to_dict(html, 2)
+

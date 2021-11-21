@@ -16,7 +16,7 @@ class FormData(UserDict):
                 key, self.keys()
             ))
         if value is None:
-            value=''
+            value = ''
         if isinstance(value, str):
             value = value.lstrip('\n')
         if isinstance(value, CheckboxValues):
@@ -25,6 +25,28 @@ class FormData(UserDict):
             value = list(value)
         super().__setitem__(key, value)
 
-def html_form_to_dict(html):
+
+def html_form_to_dict(html, index=0, name=None, id=None) -> FormData:
+    """
+    return data of a form in `html`.
+
+    index: Return the data of the n'th form in the html. By default the first one.
+
+    name: Return the data of the form with the given name.
+    """
     tree = lxml.html.fromstring(html)
-    return FormData(tree.forms[0].fields)
+    if name is not None:
+        found_names = []
+        for form in tree.iterfind('.//form'):
+            if form.get('name') == name:
+                return FormData(form.fields)
+            found_names.append(form.get('name'))
+        raise ValueError(f'No form with name="{name}" found. Found forms with these names: {found_names}')
+    if id is not None:
+        found_ids = []
+        for form in tree.iterfind('.//form'):
+            if form.get('id') == id:
+                return FormData(form.fields)
+            found_ids.append(form.get('id'))
+        raise ValueError(f'No form with id="{id}" found. Found forms with these ids: {found_ids}')
+    return FormData(tree.forms[index].fields)
