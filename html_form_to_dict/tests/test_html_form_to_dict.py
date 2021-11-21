@@ -109,3 +109,51 @@ def test_form_by_index_name_or_id():
     with pytest.raises(IndexError):
         html_form_to_dict(html, 2)
 
+
+class DummyClient:
+    def __init__(self):
+        self.calls = []
+
+    def get(self, url, data):
+        self.calls.append(('get', url, data))
+
+    def post(self, url, data):
+        self.calls.append(('post', url, data))
+
+
+def test_form_data__submit():
+    html = '''
+    <form action="my-url">
+     <input type="text" name="my_input" value="some value">
+    </form>'''
+    data = html_form_to_dict(html)
+    client = DummyClient()
+    data.submit(client)
+    assert client.calls == [('get', 'my-url', {'my_input': 'some value'})]
+
+    html = '''
+    <form action="my-url" method=POST>
+     <input type="text" name="my_input" value="some value">
+    </form>'''
+    data = html_form_to_dict(html)
+    client = DummyClient()
+    data.submit(client)
+    assert client.calls == [('post', 'my-url', {'my_input': 'some value'})]
+
+    html = '''
+    <form hx-get="my-url">
+     <input type="text" name="my_input" value="some value">
+    </form>'''
+    data = html_form_to_dict(html)
+    client = DummyClient()
+    data.submit(client)
+    assert client.calls == [('get', 'my-url', {'my_input': 'some value'})]
+
+    html = '''
+    <form hx-post="my-url">
+     <input type="text" name="my_input" value="some value">
+    </form>'''
+    data = html_form_to_dict(html)
+    client = DummyClient()
+    data.submit(client)
+    assert client.calls == [('post', 'my-url', {'my_input': 'some value'})]
