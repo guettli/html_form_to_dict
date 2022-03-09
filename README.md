@@ -44,6 +44,7 @@ You need to upload your ssh-pub-key to github first:
 ```shell
 pip install -e git+ssh://git@github.com/guettli/html_form_to_dict#egg=html_form_to_dict
 edit-the-code
+pip install pytest
 pytest
 create Pull-Request
 ```
