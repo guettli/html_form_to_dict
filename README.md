@@ -58,3 +58,6 @@ create Pull-Request
 # Deploy
 
 via deploy-library.py
+
+for py2 tgz package: `python -m twine upload dist/html_form_to_dict-*.tar.gz`
+
