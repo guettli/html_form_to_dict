@@ -1,13 +1,15 @@
-from collections import UserDict
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, unicode_literals, print_function
 
 import lxml.html
 from lxml.html import CheckboxValues, MultipleSelectOptions
 
 
-class FormData(UserDict):
+class FormData(dict):
     def __init__(self, form_element):
         self.frozen = False
-        super().__init__(form_element.fields)
+        for key, value in form_element.fields.items():
+            self.__setitem__(key, value)
         self.frozen = True
         self.form = form_element
 
@@ -24,7 +26,7 @@ class FormData(UserDict):
             value = [el.value for el in value.group if el.value is not None]
         if isinstance(value, MultipleSelectOptions):
             value = list(value)
-        super().__setitem__(key, value)
+        dict.__setitem__(self, key, value)
 
     def submit(self, client):
         for method in ['get', 'post', 'delete']:
@@ -43,7 +45,8 @@ class FormData(UserDict):
         return getattr(client, method)(url, self)
 
 
-def html_form_to_dict(html, index=0, name=None, id=None) -> FormData:
+def html_form_to_dict(html, index=0, name=None, id=None):
+    # type: () -> FormData
     """
     return data of a form in `html`.
 
@@ -58,12 +61,14 @@ def html_form_to_dict(html, index=0, name=None, id=None) -> FormData:
             if form.get('name') == name:
                 return FormData(form)
             found_names.append(form.get('name'))
-        raise ValueError(f'No form with name="{name}" found. Found forms with these names: {found_names}')
+        raise ValueError('No form with name="{name}" found. Found forms with these names: {found_names}'.format(
+            name=name, found_names=found_names))
     if id is not None:
         found_ids = []
         for form in tree.iterfind('.//form'):
             if form.get('id') == id:
                 return FormData(form)
             found_ids.append(form.get('id'))
-        raise ValueError(f'No form with id="{id}" found. Found forms with these ids: {found_ids}')
+        raise ValueError('No form with id="{id}" found. Found forms with these ids: {found_ids}'.format(
+            id=id, found_ids=found_ids))
     return FormData(tree.forms[index])
