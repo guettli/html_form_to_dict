@@ -37,6 +37,7 @@ def test_foo(client):
     # The hx-get, hx-post attributes of htmx are supported, too
     response = data.submit(client)
     
+    # If you use the Post/Redirect/Get pattern:
     assert response.status == 302, response.context['form'].errors
 ```
 
