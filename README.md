@@ -28,7 +28,7 @@ def test_foo(client):
     # Now you can test the default values of the form.
     assert data == {'city': 'Chemnitz', 'name': 'Mr. X'}
     
-    # You can edit the data. This like a human (or Playwright/Selenium)
+    # You can edit the data. This is like a human (or Playwright/Selenium)
     # altering the HTML input fields
     data['name']='Mrs. Y'
     
