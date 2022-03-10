@@ -30,7 +30,7 @@ def test_foo(client):
     
     # You can edit the data. This is like a human (or Playwright/Selenium)
     # altering the HTML input fields
-    data['name']='Mrs. Y'
+    data['name'] = 'Mrs. Y'
     
     # This submits the data to the server.
     # This methods uses the "action" attribute of the form.
