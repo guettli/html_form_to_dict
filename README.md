@@ -31,6 +31,14 @@ The `FormDict` returned by `html_form_to_dict()` does not allow adding new
 keys, which are not in the dictionary yet. This way you get an error if your
 test sets the value for an input which (maybe due to refactoring) does not exist.
 
+Above example uses Django, but the library is a pure Python library which does not depend on any
+particular web-framework.
+
+This library was build for testing, but you can use it for all tasks where you
+want to parse and submit html forms.
+
+This library does not evaluate JavaScript. If you need JS support, please use Playwright (or a similar tool).
+
 # Install
 
 ```shell
