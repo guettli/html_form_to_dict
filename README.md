@@ -16,12 +16,27 @@ Example:
 
 ```
 def test_foo(client):
-    url = reverse('foo')
+    ...
+    
+    # client is a DjangoClient. But you could use
+    # python-requests or a different URL-lib, too
     response = client.get(url)
+    
+    # This method parses the HTML in response.content to a dictionary
     data = html_form_to_dict(response.content) # <====================
+    
+    # Now you can test the default values of the form.
     assert data == {'city': 'Chemnitz', 'name': 'Mr. X'}
+    
+    # You can edit the data. This like a human (or Playwright/Selenium)
+    # altering the HTML input fields
     data['name']='Mrs. Y'
-    data.submit(client)
+    
+    # This submits the data to the server.
+    # This methods uses the "action" attribute of the form.
+    # The hx-get, hx-post attributes of htmx are supported, too
+    response = data.submit(client)
+    
     assert resonse.status == 302, response.context['form'].errors
 ```
 
