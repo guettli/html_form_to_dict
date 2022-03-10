@@ -37,7 +37,7 @@ def test_foo(client):
     # The hx-get, hx-post attributes of htmx are supported, too
     response = data.submit(client)
     
-    assert resonse.status == 302, response.context['form'].errors
+    assert response.status == 302, response.context['form'].errors
 ```
 
 Above code uses pytest-django. See [client fixture](https://pytest-django.readthedocs.io/en/latest/helpers.html#client-django-test-client)
