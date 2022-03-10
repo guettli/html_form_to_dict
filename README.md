@@ -23,7 +23,7 @@ def test_foo(client):
     response = client.get(url)
     
     # This method parses the HTML in response.content to a dictionary
-    data = html_form_to_dict(response.content) # <====================
+    data = html_form_to_dict(response.content)
     
     # Now you can test the default values of the form.
     assert data == {'city': 'Chemnitz', 'name': 'Mr. X'}
