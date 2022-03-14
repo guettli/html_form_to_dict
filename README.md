@@ -22,7 +22,10 @@ def test_foo(client):
     # python-requests or a different URL-lib, too
     response = client.get(url)
     
-    # This method parses the HTML in response.content to a dictionary
+    # This method parses the HTML in response.content to a dictionary.
+    # This dictionary is like request.POST or request.GET.
+    # It is a flat mapping from the input elements of the form
+    # to their value.
     data = html_form_to_dict(response.content)
     
     # Now you can test the default values of the form.
