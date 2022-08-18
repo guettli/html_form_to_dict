@@ -56,6 +56,13 @@ def test_html_form_to_dict__unknown_key():
     with pytest.raises(KeyError):
         data['typo']
 
+def test_html_form_to_dict__hidden():
+    html = '''
+    <form>
+     <input type="hidden" name="name" value="1">
+    </form>'''
+    data = html_form_to_dict(html)
+    assert data == {'name': '1'}    
 
 def test_html_form_to_dict__select_single():
     html = '''
