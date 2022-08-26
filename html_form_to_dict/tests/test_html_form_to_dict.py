@@ -174,7 +174,7 @@ def test_form_data__update_not_possible_if_dict_is_frozen():
      <input type="text" name="my_input" value="some value">
     </form>'''
     data = html_form_to_dict(html)
-    with pytest.raises(ValueError, match="Key unkown_key is not in the dict. Available: \['my_input'\]"):
+    with pytest.raises(ValueError, match=r"Key unkown_key is not in the dict. Available: .*'my_input'.*"):
         data.update(dict(unkown_key=1))
     data.frozen = False
     data.update(dict(unkown_key=1))
