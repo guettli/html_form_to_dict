@@ -28,6 +28,10 @@ class FormData(dict):
             value = list(value)
         dict.__setitem__(self, key, value)
 
+    def update(self, other_dict):
+        for key, value in other_dict.items():
+            self[key] = value
+
     def submit(self, client):
         for method in ['get', 'post', 'delete']:
             url = self.form.get('hx-' + method)

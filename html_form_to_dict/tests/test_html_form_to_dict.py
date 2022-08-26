@@ -160,3 +160,15 @@ def test_form_data__submit():
     client = DummyClient()
     data.submit(client)
     assert client.calls == [('post', 'my-url', {'my_input': 'some value'})]
+
+def test_form_data__update_not_possible_if_dict_is_frozen():
+    html = '''
+    <form hx-post="my-url">
+     <input type="text" name="my_input" value="some value">
+    </form>'''
+    data = html_form_to_dict(html)
+    with pytest.raises(ValueError, match="Key unkown_key is not in the dict. Available: \['my_input'\]"):
+        data.update(dict(unkown_key=1))
+    data.frozen = False
+    data.update(dict(unkown_key=1))
+    assert data == {'unkown_key': 1, 'my_input': 'some value'}
