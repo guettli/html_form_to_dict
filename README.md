@@ -5,10 +5,12 @@
 
 This is a tiny library which provides a method called `html_form_to_dict()`.
 
-This method takes a string containing HTML and returns a dictionary of the value of the first form.
+This method takes a string containing HTML and returns a dictionary of the values of the first form.
 
 The data returned by `html_form_to_dict()` is a `FormDict` which has the method `submit()`. This way
 you can submit the data like a real browser would.
+
+This mean you can do simple end-to-end testing of form handling without a real browser (like selenium/puppeteer/playwright).
 
 The `submit()` method supports the "action" and "method" attributes of forms and additionaly the [htmx](//htmx.org) attributes [hx-get](https://htmx.org/attributes/hx-get/), [hx-post](https://htmx.org/attributes/hx-post/).
 
