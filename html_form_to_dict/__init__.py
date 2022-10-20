@@ -2,30 +2,41 @@
 from __future__ import absolute_import, division, unicode_literals, print_function
 
 import lxml.html
-from lxml.html import CheckboxValues, MultipleSelectOptions
+import six
+from lxml.html import CheckboxValues, MultipleSelectOptions, InputElement
 
 
 class FormData(dict):
     def __init__(self, form_element):
         self.frozen = False
-        for key, value in form_element.fields.items():
+        for key, element in form_element.inputs.items():
+            skip, value = self.get_value_from_element(element)
+            if skip:
+                continue
             self.__setitem__(key, value)
         self.frozen = True
         self.form = form_element
+
+    def get_value_from_element(self, element):
+        if isinstance(element, InputElement):
+            if element.attrib.get('type') == 'submit':
+                return True, None
+        value_obj = element.value
+        if value_obj is None:
+            return False, ''
+        if isinstance(value_obj, str):
+            value_obj = value_obj.lstrip('\n')
+        if isinstance(value_obj, CheckboxValues):
+            value_obj = [el.value for el in value_obj.group if el.value is not None]
+        if isinstance(value_obj, MultipleSelectOptions):
+            value_obj = list(value_obj)
+        return False, value_obj
 
     def __setitem__(self, key, value):
         if self.frozen and key not in self:
             raise ValueError('Key %s is not in the dict. Available: %s' % (
                 key, self.keys()
             ))
-        if value is None:
-            value = ''
-        if isinstance(value, str):
-            value = value.lstrip('\n')
-        if isinstance(value, CheckboxValues):
-            value = [el.value for el in value.group if el.value is not None]
-        if isinstance(value, MultipleSelectOptions):
-            value = list(value)
         dict.__setitem__(self, key, value)
 
     def update(self, other_dict):

@@ -174,16 +174,17 @@ def test_form_data__update_not_possible_if_dict_is_frozen():
      <input type="text" name="my_input" value="some value">
     </form>'''
     data = html_form_to_dict(html)
-    with pytest.raises(ValueError, match=r"Key unkown_key is not in the dict. Available: .*'my_input'.*"):
-        data.update(dict(unkown_key=1))
+    with pytest.raises(ValueError, match=r"Key unknown_key is not in the dict. Available: .*'my_input'.*"):
+        data.update(dict(unknown_key=1))
     data.frozen = False
-    data.update(dict(unkown_key=1))
-    assert data == {'unkown_key': 1, 'my_input': 'some value'}
+    data.update(dict(unknown_key=1))
+    assert data == {'unknown_key': 1, 'my_input': 'some value'}
 
 def test_button_input():
     html = '''
         <form>
          <button type="submit" name="my_input" value="some value">foo</button>
+         <input type="submit" value="foo" name="_addanother">
         </form>'''
     data = html_form_to_dict(html)
     assert not data
