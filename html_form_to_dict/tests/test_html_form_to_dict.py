@@ -179,3 +179,11 @@ def test_form_data__update_not_possible_if_dict_is_frozen():
     data.frozen = False
     data.update(dict(unkown_key=1))
     assert data == {'unkown_key': 1, 'my_input': 'some value'}
+
+def test_button_input():
+    html = '''
+        <form>
+         <button type="submit" name="my_input" value="some value">foo</button>
+        </form>'''
+    data = html_form_to_dict(html)
+    assert not data
